@@ -198,7 +198,7 @@ app.post('/distribute', async (req, res) => {
   try {
     const { walletAddress, amount } = req.body;
 
-    const newAmount = (amount*2).toString();
+    const newAmount = (BigInt(amount*2)).toString();
     const response = await transferPool(walletAddress, newAmount);
     
     res.status(200).json({ success: true, response });
