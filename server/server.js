@@ -18,7 +18,7 @@ const io = socketIo(server, {
   },
 });
 
-const web3 = new Web3(new Web3.providers.HttpProvider(process.env.INFURA_URL)); // Initialize Web3 with Infura URL
+const web3 = new Web3(new Web3.providers.HttpProvider(process.env.INFURA_URL));
 const contractAddress = process.env.CONTRACT_ADDRESS;
 const gameContractAddress = process.env.GAME_CONTRACT_ADDRESS;
 const poolContract = new web3.eth.Contract(PoolContractABI, contractAddress);
@@ -76,36 +76,6 @@ const startGame = (roomName) => {
     room.playerChoices = {};
     room.playerWallets = {};
     room.roomRunning = false;
-  }
-};
-
-const createRoom = async (roomId) => {
-  const replacer = (key, value) => {
-    return typeof value === 'bigint' ? value.toString() : value;
-  };
-
-  try {
-    const createRoomData = poolContract.methods.createRoom(roomId).encodeABI();
-
-    const gasEstimate = await web3.eth.estimateGas({ from: ownerAddress, to: contractAddress, data: createRoomData });
-
-    const gasPrice = await web3.eth.getGasPrice();
-
-    const tx = {
-      from: ownerAddress,
-      to: contractAddress,
-      gas: gasEstimate,
-      gasPrice: gasPrice,
-      data: createRoomData,
-    };
-
-    const signedTx = await web3.eth.accounts.signTransaction(tx, ownerPrivateKey);
-
-    const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
-
-    return receipt;
-  } catch (error) {
-    console.error('Error while creating room:', error.message);
   }
 };
 
@@ -228,7 +198,8 @@ app.post('/distribute', async (req, res) => {
   try {
     const { walletAddress, amount } = req.body;
 
-    const response = await transferPool(walletAddress, amount);
+    const newAmount = (amount*2).toString();
+    const response = await transferPool(walletAddress, newAmount);
     
     res.status(200).json({ success: true, response });
   } catch (err) {
