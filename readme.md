@@ -48,11 +48,6 @@ Before running the game, make sure you have the following:
    npm run dev
    ```
 
-   This command uses nodemon to automatically restart the game whenever changes are made to the source code.
-
-
-   ```
-
 ## License
 
 This project is licensed under the ISC License.
