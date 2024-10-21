@@ -51,8 +51,3 @@ Before running the game, make sure you have the following:
 ## License
 
 This project is licensed under the ISC License.
-
-## Author
-
-Techentia
-work@techentia.com
