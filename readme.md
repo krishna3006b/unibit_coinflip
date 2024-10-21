@@ -4,7 +4,7 @@ This is a coin flip game where you can make your tokens double or nothing.
 
 ## About
 
-- Intractive beting game 
+- Interactive beting game 
 
 ## Prerequisites
 
